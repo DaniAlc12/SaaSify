@@ -4,23 +4,23 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class Cliente implements Serializable {
+public class Client implements Serializable {
     private final UUID id;
     private final String dni;
-    private String nombre;
+    private String name;
     private String email;
     private String password;
-    private BigDecimal saldoBancario;
+    private BigDecimal bankBalance;
     private static final long serialVerisonUID = 1L;
 
-    public Cliente(UUID id, String dni, String nombre, String email, String password, BigDecimal saldoBancario) {
+    public Client(UUID id, String dni, String name, String email, String password, BigDecimal saldoBancario) {
         if (id == null) {
             throw new IllegalArgumentException("id may not be null");
         }
         if (dni == null) {
             throw new IllegalArgumentException("dni may not be null");
         }
-        if (nombre == null ||  nombre.isBlank()) {
+        if (name == null ||  name.isBlank()) {
             throw new IllegalArgumentException("nombre may not be null or empty");
         }
         if (email == null || email.isBlank() || !email.contains("@")) {
@@ -35,10 +35,10 @@ public class Cliente implements Serializable {
 
         this.id = id;
         this.dni = dni;
-        this.nombre = nombre;
+        this.name = name;
         this.email = email;
         this.password = password;
-        this.saldoBancario = saldoBancario;
+        this.bankBalance = bankBalance;
     }
 
     public UUID getId() {
@@ -49,12 +49,12 @@ public class Cliente implements Serializable {
         return dni;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -73,11 +73,11 @@ public class Cliente implements Serializable {
         this.password = password;
     }
 
-    public BigDecimal getSaldoBancario() {
-        return saldoBancario;
+    public BigDecimal getBankBalance() {
+        return bankBalance;
     }
 
-    public void setSaldoBancario(BigDecimal saldoBancario) {
-        this.saldoBancario = saldoBancario;
+    public void setBankBalance(BigDecimal bankBalance) {
+        this.bankBalance = bankBalance;
     }
 }
