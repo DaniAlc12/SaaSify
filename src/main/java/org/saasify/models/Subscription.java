@@ -46,7 +46,7 @@ public class Subscription implements Serializable {
         this.nextPaymentDate = nextPaymentDate;
     }
 
-    public Client getCliente() {
+    public Client getClient() {
         return client;
     }
 
@@ -54,7 +54,7 @@ public class Subscription implements Serializable {
         return plan;
     }
 
-    public SubscriptionState getEstado() {
+    public SubscriptionState getState() {
         return state;
     }
 
