@@ -1,5 +1,7 @@
 package org.saasify.repository.file;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.saasify.models.Client;
 import org.saasify.models.Subscription;
 import org.saasify.models.SubscriptionData;
@@ -31,8 +33,10 @@ public class SubscriptionFileRepository implements SubscriptionRepository {
         if(!file.exists()){
             return new ArrayList<>();
         }
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
-            List<SubscriptionData> subscriptionData = (List<SubscriptionData>) ois.readObject();
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            List<SubscriptionData> subscriptionData =
+                    mapper.readValue(file, new TypeReference<List<SubscriptionData>>() {});
             List<Subscription> realSubscriptions = new ArrayList<>();
             for(SubscriptionData data : subscriptionData){
 
@@ -52,7 +56,7 @@ public class SubscriptionFileRepository implements SubscriptionRepository {
                 realSubscriptions.add(sub);
             }
             return realSubscriptions;
-        }catch (IOException | ClassNotFoundException e){
+        }catch (IOException e){
             System.err.println("Error deserializing Subscription plans.");
             return new ArrayList<>();
         }
@@ -63,10 +67,12 @@ public class SubscriptionFileRepository implements SubscriptionRepository {
         for(Subscription sub : this.subscriptions){
             subscriptionData.add(new SubscriptionData(sub));
         }
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
-            oos.writeObject(subscriptionData);
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            File file = new File(filePath);
+            mapper.writeValue(file, subscriptionData);
         }catch(IOException e){
-            throw new RuntimeException("Error serializando clientes.");
+            throw new RuntimeException("Error serializing Subscription plans.");
         }
     }
 
