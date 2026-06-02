@@ -24,19 +24,19 @@ public class Subscription implements Serializable {
 
     public Subscription(Client client, SubscriptionPlan plan, LocalDate startDate, SubscriptionState state, LocalDate nextPaymentDate) {
         if(client == null){
-            throw new IllegalArgumentException("Cliente no puede ser nulo");
+            throw new IllegalArgumentException("Client cannot be null");
         }
         if(plan == null){
-            throw new IllegalArgumentException("Plan no puede ser nulo");
+            throw new IllegalArgumentException("Plan cannot be null");
         }
         if(state == null){
-            throw new IllegalArgumentException("estado no puede ser nulo");
+            throw new IllegalArgumentException("State cannot be null");
         }
         if(startDate == null){
-            throw new IllegalArgumentException("Fecha Inicio no puede ser nulo");
+            throw new IllegalArgumentException("StartDate cannot be null");
         }
         if(nextPaymentDate == null){
-            throw new IllegalArgumentException("Fecha Proximo Cobro no puede ser nulo");
+            throw new IllegalArgumentException("NextPaymentDate cannot be null");
         }
 
         this.client = client;
