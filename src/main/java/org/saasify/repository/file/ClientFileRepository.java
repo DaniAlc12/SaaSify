@@ -18,11 +18,11 @@ public class ClientFileRepository implements ClientRepository {
             throw new IllegalArgumentException("filePath is null or blank");
         }
         this.filePath = filePath;
-        this.clients = deserializarClientes();
+        this.clients = deserializeClients();
     }
 
     @SuppressWarnings("unchecked")
-    private List<Client> deserializarClientes() {
+    private List<Client> deserializeClients() {
         File file = new File(filePath);
 
         if(!file.exists()) {
@@ -37,7 +37,7 @@ public class ClientFileRepository implements ClientRepository {
         }
     }
 
-    private void serializarClientes(){
+    private void serializeClients(){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
             oos.writeObject(clients);
         }catch(IOException e){
@@ -63,7 +63,7 @@ public class ClientFileRepository implements ClientRepository {
     @Override
     public void save(Client client) {
         clients.add(client);
-        serializarClientes();
+        serializeClients();
     }
 }
 

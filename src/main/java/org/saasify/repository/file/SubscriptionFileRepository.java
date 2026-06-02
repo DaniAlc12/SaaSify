@@ -36,24 +36,18 @@ public class SubscriptionFileRepository implements SubscriptionRepository {
             List<Subscription> realSubscriptions = new ArrayList<>();
             for(SubscriptionData data : subscriptionData){
 
-                Optional<Client> optionalClient = this.clientRepository.findByDni(data.getClientDni());
-                if(!optionalClient.isPresent()){
-                    throw new IllegalArgumentException("the dni is not found");
-                }
-                Client client = optionalClient.get();
+                Client client = this.clientRepository.findByDni
+                        (data.clientDni()).orElseThrow(() -> new IllegalArgumentException("Client not found"));
 
-                Optional<SubscriptionPlan> optionalPlan = this.planRepository.findById(data.getPlanId());
-                if(!optionalPlan.isPresent()){
-                    throw new IllegalArgumentException("the plan is not found");
-                }
-                SubscriptionPlan plan = optionalPlan.get();
+                SubscriptionPlan plan = this.planRepository.findById
+                        (data.planId()).orElseThrow(() -> new IllegalArgumentException("Plan not found"));
 
                 Subscription sub = new Subscription(
                         client,
                         plan,
-                        data.getStartDate(),
-                        data.getState(),
-                        data.getNextBillingDate()
+                        data.startDate(),
+                        data.state(),
+                        data.nextBillingDate()
                 );
                 realSubscriptions.add(sub);
             }

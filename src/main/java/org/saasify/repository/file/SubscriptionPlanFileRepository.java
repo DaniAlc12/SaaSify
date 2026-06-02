@@ -53,7 +53,7 @@ public class SubscriptionPlanFileRepository implements SubscriptionPlanRepositor
     @Override
     public Optional<SubscriptionPlan> findById(int id) {
         for(SubscriptionPlan sp : subscriptionPlans){
-            if(sp.getId() == id){
+            if(sp.id() == id){
                return Optional.of(sp);
             }
         }
