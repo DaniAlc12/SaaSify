@@ -1,6 +1,7 @@
-package org.saasify.repository;
+package org.saasify.repository.file;
 
 import org.saasify.models.SubscriptionPlan;
+import org.saasify.repository.SubscriptionPlanRepository;
 
 import java.io.*;
 import java.math.BigDecimal;

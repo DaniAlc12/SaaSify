@@ -19,7 +19,7 @@ public class Subscription implements Serializable {
         this.plan = plan;
         this.state = SubscriptionState.ACTIVA;
         this.startDate = LocalDate.now();
-        this.nextPaymentDate = this.startDate.plusMonths(plan.getPeriodMonths());
+        this.nextPaymentDate = this.startDate.plusMonths(plan.periodMonths());
     }
 
     public Subscription(Client client, SubscriptionPlan plan, LocalDate startDate, SubscriptionState state, LocalDate nextPaymentDate) {

@@ -1,6 +1,7 @@
-package org.saasify.repository;
+package org.saasify.repository.file;
 
 import org.saasify.models.Client;
+import org.saasify.repository.ClientRepository;
 
 import java.io.*;
 import java.util.ArrayList;

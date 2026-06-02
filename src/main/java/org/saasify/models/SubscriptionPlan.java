@@ -3,48 +3,24 @@ package org.saasify.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SubscriptionPlan implements Serializable {
+public record SubscriptionPlan
+        (int id,String name,BigDecimal price,
+         int periodMonths) implements Serializable {
 
-    private final int id;
-    private final String name;
-    private final BigDecimal price;
-    private final int periodMonths;
-    private static final long serialVerisonUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-    public SubscriptionPlan(int id, String name, BigDecimal price, int periodMonths) {
-        if (id <= 0 ) {
-            throw new IllegalArgumentException("Id may not be negative");
+    public SubscriptionPlan {
+        if (id<=0){
+            throw new IllegalArgumentException("The id must be a positive integer");
         }
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Nombre may not be null or empty");
+        if (name==null ||  name.isBlank()){
+            throw new IllegalArgumentException("The name may not be null or empty");
         }
-        if (price == null || price.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Precio may not be null or empty");
+        if (price==null){
+            throw new IllegalArgumentException("The price may not be null");
         }
-        if (periodMonths <= 0) {
-            throw new IllegalArgumentException("Periodo may not be negative");
+        if (periodMonths<=0){
+            throw new IllegalArgumentException("The period months may not be null or empty");
         }
-
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.periodMonths = periodMonths;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public int getPeriodMonths() {
-        return periodMonths;
-    }
-
 }

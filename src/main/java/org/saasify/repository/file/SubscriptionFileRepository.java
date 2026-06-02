@@ -1,16 +1,19 @@
-package org.saasify.repository;
+package org.saasify.repository.file;
 
 import org.saasify.models.Client;
 import org.saasify.models.Subscription;
 import org.saasify.models.SubscriptionData;
 import org.saasify.models.SubscriptionPlan;
+import org.saasify.repository.ClientRepository;
+import org.saasify.repository.SubscriptionPlanRepository;
+import org.saasify.repository.SubscriptionRepository;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SubscriptionFileRepository implements SubscriptionRepository{
+public class SubscriptionFileRepository implements SubscriptionRepository {
     private final String filePath;
     private final SubscriptionPlanRepository planRepository;
     private final ClientRepository clientRepository;
