@@ -1,5 +1,6 @@
 package org.saasify.service;
 
+import org.saasify.exceptions.DuplicateSubscriptionException;
 import org.saasify.exceptions.InsufficientFundsException;
 import org.saasify.models.Client;
 import org.saasify.models.Subscription;
@@ -23,6 +24,10 @@ public class SubscriptionService {
     }
 
     public void processBilling(String clientDni, int planId){
+        if(subscriptionRepository.findActiveSubscription(clientDni, planId).isPresent()){
+            throw new DuplicateSubscriptionException("Subscription already exists");
+        }
+
         Client client = clientRepository.findByDni(clientDni).orElseThrow(()->new RuntimeException("Client not found"));
         SubscriptionPlan subsPlan= subscriptionPlanRepository.findById(planId).orElseThrow();
 
