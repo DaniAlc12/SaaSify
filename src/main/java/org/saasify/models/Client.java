@@ -13,7 +13,7 @@ public class Client implements Serializable {
     private BigDecimal bankBalance;
     private static final long serialVerisonUID = 1L;
 
-    public Client(UUID id, String dni, String name, String email, String password, BigDecimal saldoBancario) {
+    public Client(UUID id, String dni, String name, String email, String password, BigDecimal bankBalance) {
         if (id == null) {
             throw new IllegalArgumentException("id may not be null");
         }
@@ -29,8 +29,8 @@ public class Client implements Serializable {
         if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("password may not be null or empty");
         }
-        if (saldoBancario == null ||  saldoBancario.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("saldoBancario may not be null or negative");
+        if (bankBalance == null ||  bankBalance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("bankBalance may not be null or negative");
         }
 
         this.id = id;
