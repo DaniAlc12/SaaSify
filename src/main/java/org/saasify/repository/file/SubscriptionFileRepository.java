@@ -2,10 +2,7 @@ package org.saasify.repository.file;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.saasify.models.Client;
-import org.saasify.models.Subscription;
-import org.saasify.models.SubscriptionData;
-import org.saasify.models.SubscriptionPlan;
+import org.saasify.models.*;
 import org.saasify.repository.ClientRepository;
 import org.saasify.repository.SubscriptionPlanRepository;
 import org.saasify.repository.SubscriptionRepository;
@@ -74,6 +71,15 @@ public class SubscriptionFileRepository implements SubscriptionRepository {
         }catch(IOException e){
             throw new RuntimeException("Error serializing Subscription plans.");
         }
+    }
+
+    @Override
+    public Optional<Subscription> findActiveSubscription(String clientDni, int planId){
+        return subscriptions.stream()
+                .filter(sub -> sub.getClient().getDni().equals(clientDni))
+                .filter(sub -> sub.getPlan().id() == planId)
+                .filter(sub -> sub.getState() == SubscriptionState.ACTIVE)
+                .findFirst();
     }
 
     @Override

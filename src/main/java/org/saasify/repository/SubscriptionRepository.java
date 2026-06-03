@@ -9,4 +9,5 @@ public interface SubscriptionRepository {
     void save(Subscription subscription);
     Optional<Subscription> findByClientDni(String dni);
     List<Subscription> findAll();
+    Optional<Subscription> findActiveSubscription(String clientDni, int planId);
 }
