@@ -73,4 +73,26 @@ public class SubscriptionServiceTest {
         verify(subscriptionRepository, never()).save(any(Subscription.class));
     }
 
+    @Test
+    public void processBilling_shouldThrowException_whenClientDoesNotExist(){
+        String dni = "99999999A";
+        int planId = 1;
+
+        Client mockClient = new Client(UUID.randomUUID(),dni, "Daniel" , "danialcaniz12@gmail.com", "pass", new BigDecimal("10.00"));
+        SubscriptionPlan mockPlan = new SubscriptionPlan(planId,"Premium", new BigDecimal("20.00"), 1);
+
+
+        when(clientRepository.findByDni(dni)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+           subscriptionService.processBilling(dni,planId);
+        });
+
+        assertEquals("Client not found", exception.getMessage());
+
+        verify(clientRepository, never()).save(mockClient);
+        verify(subscriptionRepository, never()).save(any(Subscription.class));
+        verify(subscriptionPlanRepository, never()).findById(anyInt());
+    }
+
 }
