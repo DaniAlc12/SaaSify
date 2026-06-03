@@ -11,13 +11,13 @@ public class Subscription implements Serializable {
     private LocalDate nextPaymentDate;
     private static final long serialVerisonUID = 1L;
 
-    public Subscription(Client client, SubscriptionPlan plan) {
+    public Subscription(Client client, SubscriptionPlan plan, LocalDate now, SubscriptionState active) {
         if (client == null ||  plan == null) {
             throw new IllegalArgumentException();
         }
         this.client = client;
         this.plan = plan;
-        this.state = SubscriptionState.ACTIVA;
+        this.state = SubscriptionState.ACTIVE;
         this.startDate = LocalDate.now();
         this.nextPaymentDate = this.startDate.plusMonths(plan.periodMonths());
     }
