@@ -43,13 +43,12 @@ public class SubscriptionFileRepository implements SubscriptionRepository {
                 SubscriptionPlan plan = this.planRepository.findById
                         (data.planId()).orElseThrow(() -> new IllegalArgumentException("Plan not found"));
 
-                Subscription sub = new Subscription(
+                Subscription sub = new Subscription(,
                         client,
                         plan,
                         data.startDate(),
                         data.state(),
-                        data.nextBillingDate()
-                );
+                        data.nextBillingDate());
                 realSubscriptions.add(sub);
             }
             return realSubscriptions;

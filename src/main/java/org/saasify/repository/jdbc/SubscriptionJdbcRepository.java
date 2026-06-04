@@ -45,7 +45,7 @@ public class SubscriptionJdbcRepository implements SubscriptionRepository {
 
         try(Connection con = DatabaseConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setObject(1, clientDni);
+            ps.setString(1, clientDni);
             ps.setInt(2, planId);
 
             try(ResultSet rs = ps.executeQuery()){

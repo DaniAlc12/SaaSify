@@ -25,7 +25,7 @@ public class Subscription implements Serializable {
         this.nextPaymentDate = this.startDate.plusMonths(plan.periodMonths());
     }
 
-    public Subscription(Client client, SubscriptionPlan plan, LocalDate startDate, SubscriptionState state, LocalDate nextPaymentDate) {
+    public Subscription(UUID id, Client client, SubscriptionPlan plan, LocalDate startDate, SubscriptionState state, LocalDate nextPaymentDate) {
         if(client == null){
             throw new IllegalArgumentException("Client cannot be null");
         }
@@ -42,6 +42,7 @@ public class Subscription implements Serializable {
             throw new IllegalArgumentException("NextPaymentDate cannot be null");
         }
 
+        this.id = id;
         this.client = client;
         this.plan = plan;
         this.startDate = startDate;
