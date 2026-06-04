@@ -2,12 +2,14 @@ package org.saasify.models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Subscription implements Serializable {
-    private final Client client;
-    private final SubscriptionPlan plan;
+    private UUID id;
+    private Client client;
+    private SubscriptionPlan plan;
     private SubscriptionState state;
-    private final LocalDate startDate;
+    private LocalDate startDate;
     private LocalDate nextPaymentDate;
     private static final long serialVerisonUID = 1L;
 
@@ -15,6 +17,7 @@ public class Subscription implements Serializable {
         if (client == null ||  plan == null) {
             throw new IllegalArgumentException();
         }
+        this.id = UUID.randomUUID();
         this.client = client;
         this.plan = plan;
         this.state = SubscriptionState.ACTIVE;
@@ -44,6 +47,13 @@ public class Subscription implements Serializable {
         this.startDate = startDate;
         this.state = state;
         this.nextPaymentDate = nextPaymentDate;
+    }
+
+    public Subscription() {
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public Client getClient() {
