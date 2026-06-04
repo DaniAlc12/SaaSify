@@ -5,12 +5,9 @@ import org.saasify.exceptions.InsufficientFundsException;
 import org.saasify.models.Client;
 import org.saasify.models.Subscription;
 import org.saasify.models.SubscriptionPlan;
-import org.saasify.models.SubscriptionState;
 import org.saasify.repository.ClientRepository;
 import org.saasify.repository.SubscriptionPlanRepository;
 import org.saasify.repository.SubscriptionRepository;
-
-import java.time.LocalDate;
 
 public class SubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
@@ -36,7 +33,7 @@ public class SubscriptionService {
         }else{
             client.setBankBalance(client.getBankBalance().subtract(subsPlan.price()));
             clientRepository.save(client);
-            Subscription subscription = new Subscription(client,subsPlan, LocalDate.now(), SubscriptionState.ACTIVE);
+            Subscription subscription = new Subscription(client,subsPlan);
             subscriptionRepository.save(subscription);
         }
 

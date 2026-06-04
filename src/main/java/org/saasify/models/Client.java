@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Client implements Serializable {
-    private final UUID id;
-    private final String dni;
+    private UUID id;
+    private String dni;
     private String name;
     private String email;
     private String password;
@@ -39,6 +39,9 @@ public class Client implements Serializable {
         this.email = email;
         this.password = password;
         this.bankBalance = bankBalance;
+    }
+
+    public Client() {
     }
 
     public UUID getId() {

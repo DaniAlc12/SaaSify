@@ -1,5 +1,7 @@
 package org.saasify.repository.file;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.saasify.models.SubscriptionPlan;
 import org.saasify.repository.SubscriptionPlanRepository;
 
@@ -23,8 +25,9 @@ public class SubscriptionPlanFileRepository implements SubscriptionPlanRepositor
     }
 
     private void serializePlans(){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
-            oos.writeObject(subscriptionPlans);
+        try{
+            ObjectMapper mapper  = new ObjectMapper();
+            mapper.writeValue(new File(this.filePath), this.subscriptionPlans);
         }catch(IOException e){
             throw new RuntimeException("Error serializing subscription plans.");
         }
@@ -42,9 +45,11 @@ public class SubscriptionPlanFileRepository implements SubscriptionPlanRepositor
             return defaultPlans;
         }
 
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
-            return (List<SubscriptionPlan>) ois.readObject();
-        }catch (IOException | ClassNotFoundException e){
+        try{
+            ObjectMapper mapper  = new ObjectMapper();
+            return mapper.readValue(file, new TypeReference<List<SubscriptionPlan>>() {
+            });
+        }catch (IOException e){
             System.err.println("Error deserializing Subscription plans.");
             return new ArrayList<>();
         }

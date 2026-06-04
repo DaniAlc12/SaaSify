@@ -1,5 +1,8 @@
 package org.saasify.repository.file;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.saasify.models.Client;
 import org.saasify.repository.ClientRepository;
 
@@ -14,7 +17,7 @@ public class ClientFileRepository implements ClientRepository {
     private final List<Client> clients;
 
     public ClientFileRepository(String filePath) {
-        if(filePath == null || filePath.isBlank()) {
+        if (filePath == null || filePath.isBlank()) {
             throw new IllegalArgumentException("filePath is null or blank");
         }
         this.filePath = filePath;
@@ -25,30 +28,33 @@ public class ClientFileRepository implements ClientRepository {
     private List<Client> deserializeClients() {
         File file = new File(filePath);
 
-        if(!file.exists()) {
+        if (!file.exists()) {
             return new ArrayList<>();
         }
 
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
-            return (List<Client>) ois.readObject();
-        }catch (IOException | ClassNotFoundException e){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(file, new TypeReference<List<Client>>() {
+            });
+        } catch (IOException e) {
             System.err.println("Error deserializando clientes.");
             return new ArrayList<>();
         }
     }
 
-    private void serializeClients(){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
-            oos.writeObject(clients);
-        }catch(IOException e){
+    private void serializeClients() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File(this.filePath), clients);
+        } catch (IOException e) {
             throw new RuntimeException("Error serializando clientes.");
         }
     }
 
     @Override
     public Optional<Client> findByDni(String dni) {
-        for(Client client : clients) {
-            if(client.getDni().equals(dni)) {
+        for (Client client : clients) {
+            if (client.getDni().equals(dni)) {
                 return Optional.of(client);
             }
         }

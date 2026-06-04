@@ -11,7 +11,7 @@ public class Subscription implements Serializable {
     private LocalDate nextPaymentDate;
     private static final long serialVerisonUID = 1L;
 
-    public Subscription(Client client, SubscriptionPlan plan, LocalDate now, SubscriptionState active) {
+    public Subscription(Client client, SubscriptionPlan plan) {
         if (client == null ||  plan == null) {
             throw new IllegalArgumentException();
         }
